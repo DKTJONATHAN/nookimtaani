@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Spaces | Nooki Mtaani</title>
+    <link rel="stylesheet" href="nooki.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+    <style>
+        /* Additional inline styles specific to this page */
+        .map-container {
+            height: 500px;
+            width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .map-loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .map-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 500;
+            background: white;
+            padding: 8px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <a href="index.html">
+                <img src="images/logo.png" alt="Nooki Mtaani Logo" class="logo-image">
+            </a>
+        </div>
+    </header>
+    
+    <nav id="mainNav">
+        <a href="index.html">Home</a>
+        <a href="list-your-space.html">List Your Space</a>
+        <a href="find-spaces.html" class="active">Find Spaces</a>
+        <a href="how-it-works.html">How It Works</a>
+        <a href="contact.html">Contact</a>
+        <a href="javascript:void(0);" class="icon" onclick="toggleMenu()">
+            <i class="fa fa-bars"></i>
+        </a>
+    </nav>
+    
+    <main class="find-spaces-container">
+        <section class="search-hero">
+            <div class="search-hero-content">
+                <h1>Find the Perfect Space for Your Hustle</h1>
+                <p>Discover affordable spaces for your business, event, or storage needs across Kenya</p>
+                
+                <div class="search-box">
+                    <div class="search-input">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchInput" placeholder="What space are you looking for? (e.g. garage, shop, event space)">
+                    </div>
+                    <div class="search-input">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <input type="text" id="locationInput" placeholder="Location (e.g. Nairobi, Westlands)">
+                    </div>
+                    <button class="search-button" id="searchButton">
+                        <i class="fas fa-search"></i> Search Spaces
+                    </button>
+                </div>
+                
+                <div class="quick-filters">
+                    <span>Popular:</span>
+                    <a href="#" data-filter="garage">Garages</a>
+                    <a href="#" data-filter="shop">Shops</a>
+                    <a href="#" data-filter="event">Event Spaces</a>
+                    <a href="#" data-filter="storage">Storage</a>
+                </div>
+            </div>
+        </section>
+        
+        <section class="search-results-container">
+            <div class="results-header">
+                <h2>Available Spaces</h2>
+                <div class="results-controls">
+                    <div class="view-toggle">
+                        <button class="view-option active" data-view="grid">
+                            <i class="fas fa-th"></i> Grid View
+                        </button>
+                        <button class="view-option" data-view="map">
+                            <i class="fas fa-map"></i> Map View
+                        </button>
+                    </div>
+                    <div class="results-count">
+                        Showing <span id="spacesCount">0</span> spaces
+                    </div>
+                </div>
+            </div>
+            
+            <div class="results-content">
+                <aside class="filter-sidebar">
+                    <div class="filter-section">
+                        <h3><i class="fas fa-filter"></i> Filters</h3>
+                        <button class="clear-filters">Clear All</button>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <h4>Space Type</h4>
+                        <div class="filter-options">
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="type" value="garage" checked> 
+                                <span class="checkmark"></span>
+                                Garage
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="type" value="shop" checked> 
+                                <span class="checkmark"></span>
+                                Shop
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="type" value="office" checked> 
+                                <span class="checkmark"></span>
+                                Office
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="type" value="event" checked> 
+                                <span class="checkmark"></span>
+                                Event Space
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <h4>Price Range (KSh)</h4>
+                        <div class="price-range">
+                            <input type="range" min="0" max="50000" value="25000" class="slider" id="priceRange">
+                            <div class="price-labels">
+                                <span>0</span>
+                                <span id="currentPrice">25,000</span>
+                                <span>50,000+</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <h4>Amenities</h4>
+                        <div class="filter-options">
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="amenity" value="parking"> 
+                                <span class="checkmark"></span>
+                                Parking
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="amenity" value="security"> 
+                                <span class="checkmark"></span>
+                                Security
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="amenity" value="wifi"> 
+                                <span class="checkmark"></span>
+                                WiFi
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="amenity" value="restroom"> 
+                                <span class="checkmark"></span>
+                                Restroom
+                            </label>
+                        </div>
+                    </div>
+                </aside>
+                
+                <div class="results-main">
+                    <div class="spaces-grid" id="spacesGrid">
+                        <!-- Spaces will be loaded here by JavaScript -->
+                        <div class="loading-spinner">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Loading available spaces...</p>
+                        </div>
+                    </div>
+                    
+                    <div class="map-container" id="mapView" style="display: none;">
+                        <div class="map-loading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Loading map...</p>
+                        </div>
+                        <div id="map"></div>
+                        <div class="map-controls">
+                            <button class="locate-button" id="locateButton">
+                                <i class="fas fa-location-arrow"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="pagination">
+                        <a href="#" class="page-link disabled">
+                            <i class="fas fa-chevron-left"></i> Previous
+                        </a>
+                        <div class="page-numbers">
+                            <a href="#" class="page-link active">1</a>
+                            <a href="#" class="page-link">2</a>
+                            <a href="#" class="page-link">3</a>
+                        </div>
+                        <a href="#" class="page-link">
+                            Next <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="list-your-space.html">List Your Space</a></li>
+                    <li><a href="find-spaces.html">Find Spaces</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-phone"></i> +254 706 396 305</p>
+                <p><i class="fas fa-envelope"></i> info@nookimtaani.co.ke</p>
+                <p><i class="fas fa-map-marker-alt"></i> Nairobi, Kenya</p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="https://facebook.com/nookimtaani" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com/nookimtaani" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="https://instagram.com/nookimtaani" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://tiktok.com/@nookimtaani" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Nooki Mtaani. All rights reserved.</p>
+            <p class="footer-tagline">Rent, List, Flex Mtaani!</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script>
+        // Enhanced Find Spaces functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sample space data (replace with real API call)
+            const spaces = [
+                {
+                    id: 1,
+                    title: "Secure Garage in Kilimani",
+                    type: "garage",
+                    price: 500,
+                    location: "Kilimani, Nairobi",
+                    image: "images/garage1.jpg",
+                    amenities: ["parking", "security"],
+                    coordinates: [-1.3000, 36.8000]
+                },
+                {
+                    id: 2,
+                    title: "Prime Retail Shop in Westlands",
+                    type: "shop",
+                    price: 500,
+                    location: "Westlands, Nairobi",
+                    image: "images/shop1.jpg",
+                    amenities: ["parking", "wifi"],
+                    coordinates: [-1.2700, 36.8100]
+                },
+                {
+                    id: 3,
+                    title: "Spacious Event Hall in CBD",
+                    type: "event",
+                    price: 1000,
+                    location: "Nairobi CBD",
+                    image: "images/hall1.jpg",
+                    amenities: ["parking", "security", "restroom"],
+                    coordinates: [-1.286389, 36.817223]
+                }
+            ];
+
+            // DOM elements
+            const spacesGrid = document.getElementById('spacesGrid');
+            const mapView = document.getElementById('mapView');
+            const mapContainer = document.getElementById('map');
+            const loadingSpinner = document.querySelector('.loading-spinner');
+            const mapLoading = document.querySelector('.map-loading');
+            const spacesCount = document.getElementById('spacesCount');
+            
+            // Initialize variables
+            let map;
+            let markers = [];
+            let currentView = 'grid';
+            let filteredSpaces = [...spaces];
+
+            // Load spaces into grid
+            function loadSpaces() {
+                spacesGrid.innerHTML = '';
+                
+                if (filteredSpaces.length === 0) {
+                    spacesGrid.innerHTML = `
+                        <div class="no-results">
+                            <i class="fas fa-search"></i>
+                            <h3>No spaces found</h3>
+                            <p>Try adjusting your filters or search terms</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                filteredSpaces.forEach(space => {
+                    const spaceCard = document.createElement('div');
+                    spaceCard.className = 'space-card';
+                    spaceCard.innerHTML = `
+                        <div class="space-image" style="background-image: url('${space.image}')">
+                            <span class="space-price">KSh ${space.price.toLocaleString()}/day</span>
+                            <span class="space-type">${space.type}</span>
+                        </div>
+                        <div class="space-details">
+                            <h3>${space.title}</h3>
+                            <p class="space-location"><i class="fas fa-map-marker-alt"></i> ${space.location}</p>
+                            <div class="space-amenities">
+                                ${space.amenities.map(amenity => 
+                                    `<span><i class="fas fa-check"></i> ${amenity.charAt(0).toUpperCase() + amenity.slice(1)}</span>`
+                                ).join('')}
+                            </div>
+                            <a href="space-details.html?id=${space.id}" class="cta-button small">View Details</a>
+                        </div>
+                    `;
+                    spacesGrid.appendChild(spaceCard);
+                });
+                
+                spacesCount.textContent = filteredSpaces.length;
+            }
+
+            // Initialize map
+            function initMap() {
+                mapLoading.style.display = 'flex';
+                
+                // Small delay to show loading spinner
+                setTimeout(() => {
+                    map = L.map('map').setView([-1.286389, 36.817223], 12);
+                    
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    }).addTo(map);
+                    
+                    // Add markers
+                    markers = filteredSpaces.map(space => {
+                        return L.marker(space.coordinates)
+                            .addTo(map)
+                            .bindPopup(`
+                                <div class="map-popup">
+                                    <img src="${space.image}" alt="${space.title}">
+                                    <h4>${space.title}</h4>
+                                    <p><i class="fas fa-map-marker-alt"></i> ${space.location}</p>
+                                    <p><strong>KSh ${space.price.toLocaleString()}/day</strong></p>
+                                    <a href="space-details.html?id=${space.id}" class="cta-button small">View Details</a>
+                                </div>
+                            `);
+                    });
+                    
+                    mapLoading.style.display = 'none';
+                }, 500);
+            }
+
+            // Filter spaces based on criteria
+            function filterSpaces() {
+                const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+                const locationTerm = document.getElementById('locationInput').value.toLowerCase();
+                const priceMax = parseInt(document.getElementById('priceRange').value);
+                
+                // Get selected types
+                const selectedTypes = Array.from(document.querySelectorAll('input[name="type"]:checked'))
+                    .map(el => el.value);
+                
+                // Get selected amenities
+                const selectedAmenities = Array.from(document.querySelectorAll('input[name="amenity"]:checked'))
+                    .map(el => el.value);
+                
+                filteredSpaces = spaces.filter(space => {
+                    // Text search
+                    const matchesSearch = space.title.toLowerCase().includes(searchTerm) || 
+                                         space.location.toLowerCase().includes(locationTerm);
+                    
+                    // Price filter
+                    const matchesPrice = space.price <= priceMax;
+                    
+                    // Type filter
+                    const matchesType = selectedTypes.includes(space.type);
+                    
+                    // Amenities filter
+                    const matchesAmenities = selectedAmenities.every(amenity => 
+                        space.amenities.includes(amenity)
+                    );
+                    
+                    return matchesSearch && matchesPrice && matchesType && matchesAmenities;
+                });
+                
+                updateResults();
+            }
+
+            // Update results based on current view
+            function updateResults() {
+                if (currentView === 'grid') {
+                    loadSpaces();
+                } else {
+                    updateMap();
+                }
+                
+                spacesCount.textContent = filteredSpaces.length;
+            }
+
+            // Update map markers
+            function updateMap() {
+                // Remove existing markers
+                markers.forEach(marker => map.removeLayer(marker));
+                
+                // Add new markers
+                markers = filteredSpaces.map(space => {
+                    return L.marker(space.coordinates)
+                        .addTo(map)
+                        .bindPopup(`
+                            <div class="map-popup">
+                                <img src="${space.image}" alt="${space.title}">
+                                <h4>${space.title}</h4>
+                                <p><i class="fas fa-map-marker-alt"></i> ${space.location}</p>
+                                <p><strong>KSh ${space.price.toLocaleString()}/day</strong></p>
+                                <a href="space-details.html?id=${space.id}" class="cta-button small">View Details</a>
+                            </div>
+                        `);
+                });
+                
+                // Adjust map view to show all markers if there are any
+                if (filteredSpaces.length > 0) {
+                    const markerGroup = new L.featureGroup(markers);
+                    map.fitBounds(markerGroup.getBounds().pad(0.2));
+                }
+            }
+
+            // Toggle between grid and map view
+            function toggleView(view) {
+                currentView = view;
+                document.querySelectorAll('.view-option').forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.view === view);
+                });
+                
+                if (view === 'grid') {
+                    spacesGrid.style.display = 'grid';
+                    mapView.style.display = 'none';
+                    loadSpaces();
+                } else {
+                    spacesGrid.style.display = 'none';
+                    mapView.style.display = 'block';
+                    
+                    if (!map) {
+                        initMap();
+                    } else {
+                        updateMap();
+                    }
+                }
+            }
+
+            // Event listeners
+            document.querySelectorAll('.view-option').forEach(option => {
+                option.addEventListener('click', () => toggleView(option.dataset.view));
+            });
+
+            document.getElementById('searchButton').addEventListener('click', filterSpaces);
+            
+            document.getElementById('priceRange').addEventListener('input', function() {
+                document.getElementById('currentPrice').textContent = 
+                    parseInt(this.value).toLocaleString();
+                filterSpaces();
+            });
+            
+            document.querySelectorAll('input[name="type"], input[name="amenity"]').forEach(input => {
+                input.addEventListener('change', filterSpaces);
+            });
+            
+            document.querySelector('.clear-filters').addEventListener('click', function() {
+                document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                    checkbox.checked = true;
+                });
+                document.getElementById('searchInput').value = '';
+                document.getElementById('locationInput').value = '';
+                document.getElementById('priceRange').value = 25000;
+                document.getElementById('currentPrice').textContent = '25,000';
+                filterSpaces();
+            });
+            
+            // Quick filter links
+            document.querySelectorAll('.quick-filters a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const filter = this.dataset.filter;
+                    document.querySelectorAll('input[name="type"]').forEach(checkbox => {
+                        checkbox.checked = (checkbox.value === filter);
+                    });
+                    filterSpaces();
+                });
+            });
+
+            // Locate button
+            document.getElementById('locateButton').addEventListener('click', function() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(position => {
+                        map.setView([position.coords.latitude, position.coords.longitude], 14);
+                    }, () => {
+                        alert('Unable to get your location');
+                    });
+                } else {
+                    alert('Geolocation is not supported by your browser');
+                }
+            });
+
+            // Initial load
+            filteredSpaces = [...spaces];
+            loadSpaces();
+            toggleView('grid');
+        });
+    </script>
+</body>
+</html>

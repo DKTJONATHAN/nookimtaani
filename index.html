@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nooki Mtaani | Rent, List, Flex Mtaani</title>
+    <link rel="stylesheet" href="nooki.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <a href="index.html">
+                <img src="images/logo.png" alt="Nooki Mtaani Logo" class="logo-image">
+            </a>
+        </div>
+    </header>
+    
+    <nav id="mainNav">
+        <a href="index.html" class="active">Home</a>
+        <a href="list-your-space.html">List Your Space</a>
+        <a href="find-spaces.html">Find Spaces</a>
+        <a href="how-it-works.html">How It Works</a>
+        <a href="contact.html">Contact</a>
+        <a href="javascript:void(0);" class="icon" onclick="toggleMenu()">
+            <i class="fa fa-bars"></i>
+        </a>
+    </nav>
+    
+   <section class="hero" style="background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('images/home-hero-bg.jpg') no-repeat center center/cover; min-height: 80vh; display: flex; align-items: center; justify-content: center;">
+    <div class="hero-content">
+        <h1>Turn Your Extra Space Into Extra Cash</h1>
+        <p>Rent unused spaces in your neighborhood or find affordable places for your business, event, or hustle.</p>
+        <div class="cta-container">
+            <a href="list-your-space.html" class="cta-button">List Your Space</a>
+            <a href="find-spaces.html" class="cta-button secondary">Find Spaces</a>
+        </div>
+    </div>
+</section>
+    
+    <section class="testimonials">
+        <h2>What People Are Saying</h2>
+        <div class="testimonial-slider" id="testimonialSlider">
+            <!-- Testimonials will be added by JavaScript -->
+        </div>
+    </section>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="list-your-space.html">List Your Space</a></li>
+                    <li><a href="find-spaces.html">Find Spaces</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-phone"></i> +254 706 396 305</p>
+                <p><i class="fas fa-envelope"></i> info@nookimtaani.co.ke</p>
+                <p><i class="fas fa-map-marker-alt"></i> Nairobi, Kenya</p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="https://facebook.com/nookimtaani" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com/nookimtaani" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="https://instagram.com/nookimtaani" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://tiktok.com/@nookimtaani" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Nooki Mtaani. All rights reserved.</p>
+            <p class="footer-tagline">Rent, List, Flex Mtaani!</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Simple testimonial slider
+        document.addEventListener('DOMContentLoaded', function() {
+            const testimonials = [
+                {
+                    quote: "Nooki Mtaani helped me earn KSh 25,000 from my unused garage last month!",
+                    author: "Jane M., Nairobi"
+                },
+                {
+                    quote: "Found the perfect event space for my pop-up shop at half the usual price.",
+                    author: "Mike O., Mombasa"
+                },
+                {
+                    quote: "The easiest way to monetize extra space in your property.",
+                    author: "Sarah K., Kisumu"
+                }
+            ];
+            
+            const slider = document.getElementById('testimonialSlider');
+            let current = 0;
+            
+            function showTestimonial() {
+                slider.innerHTML = `
+                    <div class="testimonial">
+                        <p>"${testimonials[current].quote}"</p>
+                        <div class="author">- ${testimonials[current].author}</div>
+                    </div>
+                `;
+                current = (current + 1) % testimonials.length;
+            }
+            
+            showTestimonial();
+            setInterval(showTestimonial, 5000);
+            
+            // Mobile menu toggle
+            window.toggleMenu = function() {
+                const nav = document.getElementById("mainNav");
+                nav.classList.toggle("responsive");
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Your Space | Nooki Mtaani</title>
+    <link rel="stylesheet" href="nooki.css"> <!-- Correct path to CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css">
+</head>
+<body>
+    <!-- Consistent Header/Nav on all pages -->
+    <header>
+        <div class="logo-container">
+            <a href="index.html">
+                <img src="images/logo.png" alt="Nooki Mtaani Logo" class="logo-image">
+            </a>
+        </div>
+    </header>
+    
+    <nav id="mainNav">
+        <a href="index.html">Home</a>
+        <a href="list-your-space.html" class="active">List Your Space</a>
+        <a href="find-spaces.html">Find Spaces</a>
+        <a href="how-it-works.html">How It Works</a>
+        <a href="contact.html">Contact</a>
+        <a href="javascript:void(0);" class="icon" onclick="toggleMenu()">
+            <i class="fa fa-bars"></i>
+        </a>
+    </nav>
+    
+    <main class="page-container">
+        <div class="hero-banner">
+            <div class="hero-content">
+                <h1>Turn Your Empty Space into Income</h1>
+                <p>List your space in minutes and start earning today</p>
+                <a href="#spaceForm" class="cta-button">Get Started Now</a>
+            </div>
+        </div>
+        
+        <section class="form-section" id="spaceForm">
+            <div class="form-header">
+                <h2>List Your Space</h2>
+                <div class="form-progress">
+                    <div class="progress-step active" data-step="1">1. Space Details</div>
+                    <div class="progress-step" data-step="2">2. Contact Info</div>
+                    <div class="progress-step" data-step="3">3. Review & Submit</div>
+                </div>
+            </div>
+            
+            <form id="spaceFormMultiStep">
+                <!-- Step 1: Space Details -->
+                <div class="form-step active" data-step="1">
+                    <div class="form-group">
+                        <label for="space-type">Space Type</label>
+                        <select id="space-type" required>
+                            <option value="">Select space type</option>
+                            <option value="garage">Garage</option>
+                            <option value="rooftop">Rooftop</option>
+                            <option value="shop">Shop</option>
+                            <option value="hall">Hall</option>
+                            <option value="office">Office</option>
+                            <option value="warehouse">Warehouse</option>
+                            <option value="parking">Parking Space</option>
+                            <option value="land">Land</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="location">Location</label>
+                            <input type="text" id="location" placeholder="e.g. Westlands, Nairobi" required>
+                            <div class="location-suggestions"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="size">Size (sq ft)</label>
+                            <input type="number" id="size" placeholder="Approximate size" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="price">Daily Price (KSh)</label>
+                            <input type="number" id="price" placeholder="e.g. 2000" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="min-rental">Minimum Rental Period</label>
+                            <select id="min-rental" required>
+                                <option value="1">1 day</option>
+                                <option value="7">1 week</option>
+                                <option value="30" selected>1 month</option>
+                                <option value="90">3 months</option>
+                                <option value="180">6 months</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea id="description" rows="4" placeholder="Describe your space (features, accessibility, restrictions, etc.)" required></textarea>
+                        <div class="char-count"><span id="desc-count">0</span>/500 characters</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Upload Photos (Max 5, at least 1 required)</label>
+                        <div class="upload-container">
+                            <div class="upload-area" id="uploadArea">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Drag & drop photos or click to browse</p>
+                                <input type="file" id="fileInput" accept="image/*" multiple style="display:none;">
+                            </div>
+                            <div class="upload-preview" id="uploadPreview"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group amenities-group">
+                        <label>Amenities & Features</label>
+                        <div class="amenities-grid">
+                            <label class="amenity-checkbox">
+                                <input type="checkbox" name="amenities" value="security"> Security
+                            </label>
+                            <label class="amenity-checkbox">
+                                <input type="checkbox" name="amenities" value="electricity"> Electricity
+                            </label>
+                            <label class="amenity-checkbox">
+                                <input type="checkbox" name="amenities" value="water"> Water
+                            </label>
+                            <label class="amenity-checkbox">
+                                <input type="checkbox" name="amenities" value="wifi"> WiFi
+                            </label>
+                            <label class="amenity-checkbox">
+                                <input type="checkbox" name="amenities" value="parking"> Parking
+                            </label>
+                            <label class="amenity-checkbox">
+                                <input type="checkbox" name="amenities" value="toilet"> Toilet
+                            </label>
+                            <label class="amenity-checkbox">
+                                <input type="checkbox" name="amenities" value="furniture"> Furniture
+                            </label>
+                            <label class="amenity-checkbox">
+                                <input type="checkbox" name="amenities" value="kitchen"> Kitchen
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-navigation">
+                        <button type="button" class="next-step cta-button">Continue <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+                
+                <!-- Step 2: Contact Information -->
+                <div class="form-step" data-step="2">
+                    <div class="form-group">
+                        <label for="full-name">Full Name</label>
+                        <input type="text" id="full-name" placeholder="Your full name" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" placeholder="your@email.com" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" placeholder="+254 700 000000" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="id-type">Identification Type</label>
+                        <select id="id-type" required>
+                            <option value="">Select ID type</option>
+                            <option value="national-id">National ID</option>
+                            <option value="passport">Passport</option>
+                            <option value="business-reg">Business Registration</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="id-number">Identification Number</label>
+                        <input type="text" id="id-number" placeholder="ID/Passport number" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Upload ID Document (Front)</label>
+                        <div class="upload-area id-upload" id="idUploadFront">
+                            <i class="fas fa-id-card"></i>
+                            <p>Click to upload ID front</p>
+                            <input type="file" id="idFrontInput" accept="image/*" style="display:none;">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Upload ID Document (Back)</label>
+                        <div class="upload-area id-upload" id="idUploadBack">
+                            <i class="fas fa-id-card"></i>
+                            <p>Click to upload ID back</p>
+                            <input type="file" id="idBackInput" accept="image/*" style="display:none;">
+                        </div>
+                    </div>
+                    
+                    <div class="form-navigation">
+                        <button type="button" class="prev-step"><i class="fas fa-arrow-left"></i> Back</button>
+                        <button type="button" class="next-step cta-button">Continue <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+                
+                <!-- Step 3: Review & Submit -->
+                <div class="form-step" data-step="3">
+                    <div class="review-section">
+                        <h3>Review Your Listing</h3>
+                        <div class="review-card">
+                            <div class="review-images" id="reviewImages"></div>
+                            <div class="review-details">
+                                <h4 id="reviewSpaceType">Garage in Westlands</h4>
+                                <p class="price" id="reviewPrice">KSh 2,000 per day</p>
+                                <p class="location" id="reviewLocation"><i class="fas fa-map-marker-alt"></i> Westlands, Nairobi</p>
+                                <p class="description" id="reviewDescription">Spacious garage suitable for storage or workshop</p>
+                                <div class="amenities-review" id="reviewAmenities"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-review">
+                            <h4>Your Contact Information</h4>
+                            <p id="reviewContactName">John Doe</p>
+                            <p id="reviewContactEmail">john@example.com</p>
+                            <p id="reviewContactPhone">+254 700 000000</p>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group terms-group">
+                        <label class="terms-checkbox">
+                            <input type="checkbox" id="terms-agreement" required>
+                            I agree to the <a href="terms.html" target="_blank">Terms of Service</a> and <a href="privacy.html" target="_blank">Privacy Policy</a>
+                        </label>
+                    </div>
+                    
+                    <div class="form-navigation">
+                        <button type="button" class="prev-step"><i class="fas fa-arrow-left"></i> Back</button>
+                        <button type="submit" class="cta-button submit-listing"><i class="fas fa-check"></i> Submit Listing</button>
+                    </div>
+                </div>
+            </form>
+            
+            <div class="submission-success" id="successMessage" style="display:none;">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3>Your Space Has Been Submitted!</h3>
+                <p>We've received your listing and our team will review it within 24 hours. You'll receive a confirmation email once your space is live.</p>
+                <p>In the meantime, you can:</p>
+                <div class="success-actions">
+                    <a href="find-spaces.html" class="cta-button outline">Browse Other Spaces</a>
+                    <a href="dashboard.html" class="cta-button">Go to Your Dashboard</a>
+                </div>
+            </div>
+        </section>
+        
+        <section class="benefits">
+            <h2>Why List With Nooki Mtaani?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Secure Payments</h3>
+                    <p>Get paid via M-Pesa with our protected payment system. We hold payments until the rental period begins.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Thousands of Renters</h3>
+                    <p>Access our growing community of verified space seekers looking for spaces like yours.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-percentage"></i>
+                    </div>
+                    <h3>Low 10% Commission</h3>
+                    <p>We take only 10% per booking - you keep 90% of the rental income.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3>Booking Management</h3>
+                    <p>Our calendar system helps you manage availability and avoid double bookings.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>24/7 Support</h3>
+                    <p>Our customer service team is available to help with any issues that arise.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Performance Insights</h3>
+                    <p>Get detailed analytics about your space's performance and rental history.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="testimonials">
+            <h2>What Our Space Owners Say</h2>
+            <div class="testimonial-slider">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"Since listing my garage on Nooki Mtaani, I've earned over KSh 150,000 in just 6 months. The platform is easy to use and the renters are reliable."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="images/testimonial1.jpg" alt="James M.">
+                        <div>
+                            <h4>James M.</h4>
+                            <p>Space Owner, Nairobi</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"I was skeptical at first, but Nooki Mtaani has helped me monetize my empty shop space. The verification process gives me peace of mind when renting to strangers."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="images/testimonial2.jpg" alt="Sarah W.">
+                        <div>
+                            <h4>Sarah W.</h4>
+                            <p>Space Owner, Mombasa</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="pricing-calculator">
+            <h2>See How Much You Can Earn</h2>
+            <div class="calculator-container">
+                <div class="calculator-inputs">
+                    <div class="form-group">
+                        <label for="calc-price">Daily Rental Price (KSh)</label>
+                        <input type="number" id="calc-price" value="2000" min="500">
+                    </div>
+                    <div class="form-group">
+                        <label for="calc-days">Estimated Occupancy Days/Month</label>
+                        <input type="range" id="calc-days" min="1" max="30" value="15">
+                        <div class="range-value"><span id="calc-days-value">15</span> days</div>
+                    </div>
+                </div>
+                <div class="calculator-results">
+                    <div class="result-item">
+                        <span class="result-label">Monthly Earnings</span>
+                        <span class="result-value" id="monthly-earnings">KSh 30,000</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">After Commission (10%)</span>
+                        <span class="result-value" id="monthly-net">KSh 27,000</span>
+                    </div>
+                    <div class="result-item highlight">
+                        <span class="result-label">Annual Potential</span>
+                        <span class="result-value" id="annual-net">KSh 324,000</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="faq-section">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <button class="faq-question">How do I get paid for my space? <i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-answer">
+                        <p>We process payments via M-Pesa directly to your registered phone number. Payments are released to you at the beginning of each rental period after deducting our 10% commission.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">What happens if my space gets damaged? <i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-answer">
+                        <p>All renters are verified and we offer optional damage protection. You can require a security deposit when setting up your listing, and we provide documentation to help with any claims.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">Can I reject a booking request? <i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-answer">
+                        <p>Yes, you have full control over who rents your space. You can review each request and accept or decline based on your preferences.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">How do I update my space's availability? <i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-answer">
+                        <p>Once your space is listed, you'll have access to a dashboard where you can block out dates when your space isn't available for rental.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="cta-section">
+            <h2>Ready to Start Earning From Your Space?</h2>
+            <p>Join thousands of space owners who are making money with their underutilized properties.</p>
+            <a href="#spaceForm" class="cta-button large">List Your Space Now</a>
+        </section>
+    </main>
+    
+    <footer>
+        <!-- Same footer as index.html -->
+    </footer>
+
+    <script src="../script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <script>
+        // Enhanced JS for the improved page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize phone input
+            const phoneInput = document.getElementById('phone');
+            const iti = window.intlTelInput(phoneInput, {
+                initialCountry: 'ke',
+                preferredCountries: ['ke', 'ug', 'tz'],
+                utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js'
+            });
+            
+            // Multi-step form functionality
+            const formSteps = document.querySelectorAll('.form-step');
+            const nextButtons = document.querySelectorAll('.next-step');
+            const prevButtons = document.querySelectorAll('.prev-step');
+            const progressSteps = document.querySelectorAll('.progress-step');
+            
+            nextButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const currentStep = this.closest('.form-step');
+                    const currentStepNumber = parseInt(currentStep.dataset.step);
+                    const nextStepNumber = currentStepNumber + 1;
+                    
+                    // Validate current step before proceeding
+                    if (validateStep(currentStepNumber)) {
+                        currentStep.classList.remove('active');
+                        document.querySelector(`.form-step[data-step="${nextStepNumber}"]`).classList.add('active');
+                        
+                        // Update progress indicators
+                        progressSteps.forEach(step => {
+                            if (parseInt(step.dataset.step) <= nextStepNumber) {
+                                step.classList.add('completed');
+                            } else {
+                                step.classList.remove('completed');
+                            }
+                        });
+                        
+                        // Update review section if we're on the last step
+                        if (nextStepNumber === 3) {
+                            updateReviewSection();
+                        }
+                    }
+                });
+            });
+            
+            prevButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const currentStep = this.closest('.form-step');
+                    const currentStepNumber = parseInt(currentStep.dataset.step);
+                    const prevStepNumber = currentStepNumber - 1;
+                    
+                    currentStep.classList.remove('active');
+                    document.querySelector(`.form-step[data-step="${prevStepNumber}"]`).classList.add('active');
+                });
+            });
+            
+            // Image upload functionality
+            const uploadArea = document.getElementById('uploadArea');
+            const fileInput = document.getElementById('fileInput');
+            const uploadPreview = document.getElementById('uploadPreview');
+            
+            uploadArea.addEventListener('click', function() {
+                fileInput.click();
+            });
+            
+            fileInput.addEventListener('change', function() {
+                handleFiles(this.files);
+            });
+            
+            uploadArea.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.classList.add('dragover');
+            });
+            
+            uploadArea.addEventListener('dragleave', function() {
+                this.classList.remove('dragover');
+            });
+            
+            uploadArea.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.classList.remove('dragover');
+                if (e.dataTransfer.files.length) {
+                    handleFiles(e.dataTransfer.files);
+                }
+            });
+            
+            function handleFiles(files) {
+                if (files.length > 5) {
+                    alert('You can upload a maximum of 5 photos');
+                    return;
+                }
+                
+                uploadPreview.innerHTML = '';
+                
+                for (let i = 0; i < Math.min(files.length, 5); i++) {
+                    const file = files[i];
+                    if (!file.type.match('image.*')) continue;
+                    
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const imgContainer = document.createElement('div');
+                        imgContainer.className = 'preview-image';
+                        imgContainer.innerHTML = `
+                            <img src="${e.target.result}" alt="Preview">
+                            <button class="remove-image" data-index="${i}">&times;</button>
+                        `;
+                        uploadPreview.appendChild(imgContainer);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+            
+            // ID upload functionality
+            const idUploadFront = document.getElementById('idUploadFront');
+            const idFrontInput = document.getElementById('idFrontInput');
+            const idUploadBack = document.getElementById('idUploadBack');
+            const idBackInput = document.getElementById('idBackInput');
+            
+            idUploadFront.addEventListener('click', function() {
+                idFrontInput.click();
+            });
+            
+            idUploadBack.addEventListener('click', function() {
+                idBackInput.click();
+            });
+            
+            idFrontInput.addEventListener('change', function() {
+                if (this.files.length) {
+                    idUploadFront.innerHTML = '<i class="fas fa-check-circle"></i><p>ID Front Uploaded</p>';
+                    idUploadFront.classList.add('uploaded');
+                }
+            });
+            
+            idBackInput.addEventListener('change', function() {
+                if (this.files.length) {
+                    idUploadBack.innerHTML = '<i class="fas fa-check-circle"></i><p>ID Back Uploaded</p>';
+                    idUploadBack.classList.add('uploaded');
+                }
+            });
+            
+            // Description character counter
+            const description = document.getElementById('description');
+            const charCount = document.getElementById('desc-count');
+            
+            description.addEventListener('input', function() {
+                charCount.textContent = this.value.length;
+            });
+            
+            // Pricing calculator
+            const calcPrice = document.getElementById('calc-price');
+            const calcDays = document.getElementById('calc-days');
+            const calcDaysValue = document.getElementById('calc-days-value');
+            const monthlyEarnings = document.getElementById('monthly-earnings');
+            const monthlyNet = document.getElementById('monthly-net');
+            const annualNet = document.getElementById('annual-net');
+            
+            function updateCalculator() {
+                const price = parseFloat(calcPrice.value) || 0;
+                const days = parseInt(calcDays.value) || 0;
+                
+                const gross = price * days;
+                const net = gross * 0.9; // After 10% commission
+                
+                monthlyEarnings.textContent = `KSh ${gross.toLocaleString()}`;
+                monthlyNet.textContent = `KSh ${net.toLocaleString()}`;
+                annualNet.textContent = `KSh ${(net * 12).toLocaleString()}`;
+            }
+            
+            calcPrice.addEventListener('input', updateCalculator);
+            calcDays.addEventListener('input', function() {
+                calcDaysValue.textContent = this.value;
+                updateCalculator();
+            });
+            
+            // FAQ accordion
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', function() {
+                    const answer = this.nextElementSibling;
+                    const isOpen = answer.style.maxHeight;
+                    
+                    // Close all answers first
+                    document.querySelectorAll('.faq-answer').forEach(ans => {
+                        ans.style.maxHeight = null;
+                        ans.previousElementSibling.querySelector('i').className = 'fas fa-chevron-down';
+                    });
+                    
+                    // Open current if it was closed
+                    if (!isOpen) {
+                        answer.style.maxHeight = answer.scrollHeight + 'px';
+                        this.querySelector('i').className = 'fas fa-chevron-up';
+                    }
+                });
+            });
+            
+            // Form submission
+            const spaceForm = document.getElementById('spaceFormMultiStep');
+            const successMessage = document.getElementById('successMessage');
+            
+            spaceForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Simulate form submission
+                setTimeout(() => {
+                    spaceForm.style.display = 'none';
+                    successMessage.style.display = 'block';
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }, 1000);
+            });
+            
+            // Helper functions
+            function validateStep(stepNumber) {
+                // Basic validation for each step
+                if (stepNumber === 1) {
+                    const spaceType = document.getElementById('space-type').value;
+                    const location = document.getElementById('location').value;
+                    const price = document.getElementById('price').value;
+                    
+                    if (!spaceType || !location || !price) {
+                        alert('Please fill in all required fields');
+                        return false;
+                    }
+                    
+                    if (uploadPreview.children.length === 0) {
+                        alert('Please upload at least one photo of your space');
+                        return false;
+                    }
+                } else if (stepNumber === 2) {
+                    const fullName = document.getElementById('full-name').value;
+                    const email = document.getElementById('email').value;
+                    const phone = document.getElementById('phone').value;
+                    const idType = document.getElementById('id-type').value;
+                    const idNumber = document.getElementById('id-number').value;
+                    
+                    if (!fullName || !email || !phone || !idType || !idNumber) {
+                        alert('Please fill in all required fields');
+                        return false;
+                    }
+                    
+                    if (!idFrontInput.files.length || !idBackInput.files.length) {
+                        alert('Please upload both front and back of your ID document');
+                        return false;
+                    }
+                }
+                
+                return true;
+            }
+            
+            function updateReviewSection() {
+                // Update all review fields with form data
+                document.getElementById('reviewSpaceType').textContent = 
+                    `${document.getElementById('space-type').options[document.getElementById('space-type').selectedIndex].text} in ${document.getElementById('location').value}`;
+                
+                document.getElementById('reviewPrice').textContent = 
+                    `KSh ${parseInt(document.getElementById('price').value).toLocaleString()} per day`;
+                
+                document.getElementById('reviewLocation').innerHTML = 
+                    `<i class="fas fa-map-marker-alt"></i> ${document.getElementById('location').value}`;
+                
+                document.getElementById('reviewDescription').textContent = 
+                    document.getElementById('description').value;
+                
+                // Update amenities
+                const amenitiesReview = document.getElementById('reviewAmenities');
+                amenitiesReview.innerHTML = '';
+                document.querySelectorAll('input[name="amenities"]:checked').forEach(amenity => {
+                    const amenityBadge = document.createElement('span');
+                    amenityBadge.className = 'amenity-badge';
+                    amenityBadge.textContent = amenity.value;
+                    amenitiesReview.appendChild(amenityBadge);
+                });
+                
+                // Update contact info
+                document.getElementById('reviewContactName').textContent = 
+                    document.getElementById('full-name').value;
+                
+                document.getElementById('reviewContactEmail').textContent = 
+                    document.getElementById('email').value;
+                
+                document.getElementById('reviewContactPhone').textContent = 
+                    document.getElementById('phone').value;
+                
+                // Update images
+                const reviewImages = document.getElementById('reviewImages');
+                reviewImages.innerHTML = '';
+                Array.from(uploadPreview.children).forEach(imgContainer => {
+                    const img = imgContainer.querySelector('img');
+                    if (img) {
+                        const reviewImg = document.createElement('div');
+                        reviewImg.className = 'review-image';
+                        reviewImg.innerHTML = `<img src="${img.src}" alt="Space photo">`;
+                        reviewImages.appendChild(reviewImg);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

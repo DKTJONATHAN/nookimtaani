@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Title | Nooki Mtaani</title>
+    <link rel="stylesheet" href="nooki.css"> <!-- Correct path to CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Consistent Header/Nav on all pages -->
+    <header>
+        <div class="logo-container">
+            <a href="index.html">
+                <img src="images/logo.png" alt="Nooki Mtaani Logo" class="logo-image">
+            </a>
+        </div>
+    </header>
+    
+    <nav id="mainNav">
+        <a href="index.html">Home</a>
+        <a href="list-your-space.html">List Your Space</a>
+        <a href="find-spaces.html">Find Spaces</a>
+        <a href="how-it-works.html">How It Works</a>
+        <a href="contact.html">Contact</a>
+        <a href="javascript:void(0);" class="icon" onclick="toggleMenu()">
+            <i class="fa fa-bars"></i>
+        </a>
+    </nav>
+    <!-- Same header/nav as other pages -->
+    
+    <main class="page-container">
+        <section class="contact-section">
+            <div class="contact-info">
+                <h1>Get In Touch</h1>
+                <p>Have questions? We're here to help!</p>
+                
+                <div class="contact-method">
+                    <i class="fas fa-phone"></i>
+                    <h3>Call Us</h3>
+                    <p>+254 706 396 305</p>
+                </div>
+                
+                <div class="contact-method">
+                    <i class="fas fa-envelope"></i>
+                    <h3>Email Us</h3>
+                    <p>info@nookimtaani.co.ke</p>
+                </div>
+                
+                <div class="contact-method">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h3>Visit Us</h3>
+                    <p>Nooki Plaza, Moi Avenue, Nairobi</p>
+                </div>
+            </div>
+            
+            <div class="contact-form">
+                <h2>Send Us a Message</h2>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <input type="text" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Subject">
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Your Message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="cta-button">Send Message</button>
+                </form>
+            </div>
+        </section>
+        
+        <section class="faq-section">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <button class="faq-question">How do I list my space?</button>
+                    <div class="faq-answer">
+                        <p>Click on "List Your Space" and fill out the simple form with details about your space.</p>
+                    </div>
+                </div>
+                <!-- More FAQ items -->
+            </div>
+        </section>
+    </main>
+    
+    <!-- Same footer as index.html -->
+    
+    <script src="../script.js"></script>
+    <script>
+        // FAQ toggle functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                question.classList.toggle('active');
+                const answer = question.nextElementSibling;
+                answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+            });
+        });
+    </script>
+</body>
+</html>

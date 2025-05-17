@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How It Works | Nooki Mtaani</title>
+    <link rel="stylesheet" href="nooki.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Additional CSS for this page */
+        .how-it-works {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        
+        .steps-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .tab-button {
+            background: white;
+            color: var(--matatu-red);
+            border: 2px solid var(--matatu-red);
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        
+        .tab-button.active {
+            background: var(--matatu-red);
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .step {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            align-items: center;
+        }
+        
+        .step-number {
+            background: var(--matatu-red);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .step-content h3 {
+            color: var(--matatu-red);
+            margin-bottom: 0.5rem;
+        }
+        
+        .video-guide {
+            margin-top: 4rem;
+            text-align: center;
+        }
+        
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            max-width: 800px;
+            margin: 2rem auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @media (max-width: 768px) {
+            .step {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .step-number {
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <a href="index.html">
+                <img src="images/logo.png" alt="Nooki Mtaani Logo" class="logo-image">
+            </a>
+        </div>
+    </header>
+    
+    <nav id="mainNav">
+        <a href="index.html">Home</a>
+        <a href="list-your-space.html">List Your Space</a>
+        <a href="find-spaces.html">Find Spaces</a>
+        <a href="how-it-works.html" class="active">How It Works</a>
+        <a href="contact.html">Contact</a>
+        <a href="javascript:void(0);" class="icon" onclick="toggleMenu()">
+            <i class="fa fa-bars"></i>
+        </a>
+    </nav>
+    
+    <main class="page-container">
+        <section class="how-it-works">
+            <h1>How Nooki Mtaani Works</h1>
+            <p class="subtitle">Whether you have space to rent or need to find space, we make it simple</p>
+            
+            <div class="steps-tabs">
+                <button class="tab-button active" onclick="openTab(event, 'space-owners')">
+                    <i class="fas fa-home"></i> For Space Owners
+                </button>
+                <button class="tab-button" onclick="openTab(event, 'renters')">
+                    <i class="fas fa-search"></i> For Renters
+                </button>
+            </div>
+            
+            <div id="space-owners" class="tab-content active">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>List Your Space in Minutes</h3>
+                        <p>Create a free listing with photos, detailed description, and set your own pricing. Our simple form guides you through the process.</p>
+                        <ul class="step-features">
+                            <li><i class="fas fa-check-circle"></i> No upfront costs</li>
+                            <li><i class="fas fa-check-circle"></i> Set your availability</li>
+                            <li><i class="fas fa-check-circle"></i> Add multiple photos</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Receive Booking Requests</h3>
+                        <p>Get notified when renters are interested in your space. Communicate through our secure messaging system.</p>
+                        <ul class="step-features">
+                            <li><i class="fas fa-check-circle"></i> Real-time notifications</li>
+                            <li><i class="fas fa-check-circle"></i> Screening tools for renters</li>
+                            <li><i class="fas fa-check-circle"></i> Calendar to manage bookings</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Get Paid Securely</h3>
+                        <p>We handle all payments via M-Pesa. You receive 90% of the rental fee (we take just 10% as commission).</p>
+                        <ul class="step-features">
+                            <li><i class="fas fa-check-circle"></i> Instant M-Pesa payments</li>
+                            <li><i class="fas fa-check-circle"></i> Payment protection</li>
+                            <li><i class="fas fa-check-circle"></i> Monthly earnings reports</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="renters" class="tab-content">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Search for Spaces</h3>
+                        <p>Use our filters to find the perfect space by location, price, size, and amenities. Save your favorites for later.</p>
+                        <ul class="step-features">
+                            <li><i class="fas fa-check-circle"></i> Map view for locations</li>
+                            <li><i class="fas fa-check-circle"></i> Detailed space descriptions</li>
+                            <li><i class="fas fa-check-circle"></i> Real photos of each space</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Book Your Space</h3>
+                        <p>Contact the owner through our platform, ask questions, and book instantly for available dates.</p>
+                        <ul class="step-features">
+                            <li><i class="fas fa-check-circle"></i> Secure messaging</li>
+                            <li><i class="fas fa-check-circle"></i> Instant booking options</li>
+                            <li><i class="fas fa-check-circle"></i> Calendar availability</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Pay & Use the Space</h3>
+                        <p>Pay securely via M-Pesa and access the space during your booked time. Our platform protects both parties.</p>
+                        <ul class="step-features">
+                            <li><i class="fas fa-check-circle"></i> Secure M-Pesa payments</li>
+                            <li><i class="fas fa-check-circle"></i> Booking confirmation</li>
+                            <li><i class="fas fa-check-circle"></i> Owner contact details</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="video-guide">
+            <h2>See It In Action</h2>
+            <p>Watch our 2-minute guide to using Nooki Mtaani</p>
+            <div class="video-container">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/example" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <a href="find-spaces.html" class="cta-button">Start Exploring Spaces</a>
+            <a href="list-your-space.html" class="cta-button secondary">List Your Space</a>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="list-your-space.html">List Your Space</a></li>
+                    <li><a href="find-spaces.html">Find Spaces</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-phone"></i> +254 706 396 305</p>
+                <p><i class="fas fa-envelope"></i> info@nookimtaani.co.ke</p>
+                <p><i class="fas fa-map-marker-alt"></i> Nairobi, Kenya</p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="https://facebook.com/nookimtaani" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com/nookimtaani" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="https://instagram.com/nookimtaani" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://tiktok.com/@nookimtaani" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Nooki Mtaani. All rights reserved.</p>
+            <p class="footer-tagline">Rent, List, Flex Mtaani!</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        function openTab(evt, tabName) {
+            // Hide all tab content
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // Show current tab and mark button as active
+            document.getElementById(tabName).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+        
+        // Mobile menu toggle
+        function toggleMenu() {
+            const nav = document.getElementById("mainNav");
+            nav.classList.toggle("responsive");
+        }
+    </script>
+</body>
+</html>
