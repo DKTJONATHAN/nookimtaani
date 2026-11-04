@@ -9,7 +9,7 @@ import ContactPage from './components/ContactPage.jsx';
 import StaticPage from './components/StaticPage.jsx';
 import {ArrowDownRight,ArrowUpRight} from 'lucide-react';
 
-const currentPath=()=>window.location.pathname.replace(/\\/$/,'')||'/';
+const currentPath=()=>window.location.pathname.replace(/\/$/,'')||'/';
 
 function Hero({onSearch}){
   return <section className="hero">
