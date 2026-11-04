@@ -87,6 +87,7 @@ The link opens `/verify-email?token=...`; connect the verification page in the f
 
 ### Cloudflare Access-protected admin
 - `GET /api/admin/enquiries`, `PATCH /api/admin/enquiries`
+- `GET /api/admin/media/:id` — private authority evidence for Access-approved administrators only.
 - `POST /api/admin/host-applications` — approve/reject host applications.
 - `GET /api/admin/spaces`, `POST /api/admin/spaces` — listing moderation.
 - `GET /api/admin/disputes`, `PATCH /api/admin/disputes`
@@ -107,7 +108,7 @@ The code now contains the backend foundations and API handlers, but this is not 
 - The React app now has sign-up/sign-in, email verification, account, host application, host listing submission, listing detail and admin review pages. Availability calendar management, customer dispute submission, check-in/check-out photo upload UI and a full host booking-management screen still need to be completed.
 - Turnstile, Resend, D1 and R2 must be configured and tested against the actual Cloudflare resources.
 - Image byte-signature validation, EXIF stripping, upload malware scanning, storage lifecycle/retention and operational backups need a production hardening pass.
-- Host identity/property evidence collection and review are not yet complete. Account export and closure endpoints exist, but the final deletion/retention policy requires operational and legal decisions.
+- Host authority evidence is uploaded privately to R2 and can be reviewed by an Access-protected administrator before host approval. Government identity verification and independent property verification remain unimplemented. Account export and closure endpoints exist, but the final deletion/retention policy requires operational and legal decisions.
 - Daraja sandbox tests and production approval are required. Payment callbacks do not automatically confirm bookings.
 - Admin dispute review endpoints and screens exist, but renter dispute-submission UI, refunds, fee calculation, cancellation policy and any host payout model require further implementation and legal/commercial approval.
 - Privacy, terms and cookies pages are draft text and must be reviewed against the actual data flows and Kenyan law before publication.
