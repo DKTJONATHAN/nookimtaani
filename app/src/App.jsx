@@ -8,7 +8,7 @@ import SiteFooter from './components/SiteFooter.jsx';
 import ContactPage from './components/ContactPage.jsx';
 import StaticPage from './components/StaticPage.jsx';
 import {ArrowDownRight,ArrowUpRight} from 'lucide-react';
-import {AuthPage,VerifyEmailPage,AccountPage,HostApplyPage,ListingDetailPage} from './components/PlatformPages.jsx';
+import {AuthPage,VerifyEmailPage,AccountPage,HostApplyPage,ListingDetailPage,AdminPage} from './components/PlatformPages.jsx';
 
 const currentPath=()=>window.location.pathname.replace(/\/$/,'')||'/';
 
@@ -62,7 +62,8 @@ export default function App(){
   },[]);
 
   let page;
-  if(path==='/login')page=<AuthPage mode="login"/>;
+  if(path==='/admin')page=<AdminPage/>;
+  else if(path==='/login')page=<AuthPage mode="login"/>;
   else if(path==='/signup')page=<AuthPage mode="signup"/>;
   else if(path==='/verify-email')page=<VerifyEmailPage/>;
   else if(path==='/account')page=<AccountPage/>;
