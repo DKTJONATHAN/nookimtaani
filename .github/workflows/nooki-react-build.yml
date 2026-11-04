@@ -2,13 +2,17 @@ name: Nooki React build
 on:
   push:
     branches:
-      - react/nooki-mtaani-2026
+      - main
     paths:
       - "app/**"
+      - "package.json"
+      - "wrangler.jsonc"
       - ".github/workflows/nooki-react-build.yml"
   pull_request:
     paths:
       - "app/**"
+      - "package.json"
+      - "wrangler.jsonc"
       - ".github/workflows/nooki-react-build.yml"
   workflow_dispatch:
 permissions:
@@ -16,16 +20,11 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: app
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
-          cache-dependency-path: app/package.json
       - run: npm install
       - run: npm run build
-      - run: npx wrangler deploy --dry-run
+      - run: npx wrangler deploy --dry-run --config wrangler.jsonc
