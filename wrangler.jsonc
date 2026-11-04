@@ -1,0 +1,11 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "nooki-mtaani",
+  "main": "app/worker.js",
+  "compatibility_date": "2026-11-05",
+  "assets": {
+    "directory": "./app/dist",
+    "binding": "ASSETS",
+    "run_worker_first": true
+  }
+}
