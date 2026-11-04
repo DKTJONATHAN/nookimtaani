@@ -98,7 +98,7 @@ The admin API requires both a valid Cloudflare Access JWT and an email in `ADMIN
 
 The Daraja callback is treated as an untrusted notification. It is correlated to the saved CheckoutRequestID and recorded idempotently, but a successful callback is **not** enough to mark a booking paid. An administrator must reconcile the receipt against the Safaricom/Daraja transaction record and then confirm it through the admin payment review endpoint. This is a deliberate safety control; do not bypass it or mark payments paid from browser state.
 
-No wallet, escrow, automated host payout or refund automation is implemented. Do not describe these as available.
+No wallet, escrow, automated host payout or refund automation is implemented. Do not describe these as available. A daily Worker cron is configured to remove expired sessions, verification tokens, old rate-limit buckets and expired upload-intent records.
 
 ## 8. Important implementation limits
 
