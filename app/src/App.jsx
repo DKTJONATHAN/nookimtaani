@@ -8,6 +8,7 @@ import SiteFooter from './components/SiteFooter.jsx';
 import ContactPage from './components/ContactPage.jsx';
 import StaticPage from './components/StaticPage.jsx';
 import {ArrowDownRight,ArrowUpRight} from 'lucide-react';
+import {AuthPage,VerifyEmailPage,AccountPage,HostApplyPage,ListingDetailPage} from './components/PlatformPages.jsx';
 
 const currentPath=()=>window.location.pathname.replace(/\/$/,'')||'/';
 
@@ -61,7 +62,13 @@ export default function App(){
   },[]);
 
   let page;
-  if(path==='/contact')page=<ContactPage/>;
+  if(path==='/login')page=<AuthPage mode="login"/>;
+  else if(path==='/signup')page=<AuthPage mode="signup"/>;
+  else if(path==='/verify-email')page=<VerifyEmailPage/>;
+  else if(path==='/account')page=<AccountPage/>;
+  else if(path==='/host/apply')page=<HostApplyPage/>;
+  else if(path.startsWith('/spaces/'))page=<ListingDetailPage/>;
+  else if(path==='/contact')page=<ContactPage/>;
   else if(['/about','/privacy','/terms','/cookies','/how-it-works'].includes(path))page=<StaticPage path={path}/>;
   else if(path==='/host')page=<HostSection/>;
   else if(path==='/spaces')page=<SpaceDiscovery search={search}/>;
