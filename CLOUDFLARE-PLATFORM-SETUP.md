@@ -104,12 +104,12 @@ No wallet, escrow, automated host payout or refund automation is implemented. Do
 
 The code now contains the backend foundations and API handlers, but this is not yet a complete production marketplace. The following still need implementation or verification before launch:
 
-- Customer/host sign-in, verification, dashboard, listing detail, booking and admin pages need to be connected in the React UI; the API routes alone are not a finished user journey.
+- The React app now has sign-up/sign-in, email verification, account, host application, host listing submission, listing detail and admin review pages. Availability calendar management, customer dispute submission, check-in/check-out photo upload UI and a full host booking-management screen still need to be completed.
 - Turnstile, Resend, D1 and R2 must be configured and tested against the actual Cloudflare resources.
 - Image byte-signature validation, EXIF stripping, upload malware scanning, storage lifecycle/retention and operational backups need a production hardening pass.
-- Host identity/property verification document review and account deletion/retention policy require operational and legal decisions.
+- Host identity/property evidence collection and review are not yet complete. Account export and closure endpoints exist, but the final deletion/retention policy requires operational and legal decisions.
 - Daraja sandbox tests and production approval are required. Payment callbacks do not automatically confirm bookings.
-- Dispute resolution, refunds, fee calculation, cancellation policy and any host payout model require legal and commercial approval.
+- Admin dispute review endpoints and screens exist, but renter dispute-submission UI, refunds, fee calculation, cancellation policy and any host payout model require further implementation and legal/commercial approval.
 - Privacy, terms and cookies pages are draft text and must be reviewed against the actual data flows and Kenyan law before publication.
 
 Never seed fake live listings, reviews, testimonials, verification badges, booking counts or payment success. Keep demo content clearly marked and disabled in production.
