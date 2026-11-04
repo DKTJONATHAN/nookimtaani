@@ -18,7 +18,7 @@ npm run build
 npx wrangler dev --config wrangler.jsonc
 ```
 
-The root `package.json` forwards build commands into `app/`. The root `wrangler.jsonc` deploys `app/worker.js` and serves `app/dist/` as Cloudflare Static Assets. This means Cloudflare can use the repository root as its build directory without accidentally serving the old static prototype.
+The root `package.json` forwards build commands into `app/`. GitHub Actions verifies this same root-level build and Wrangler dry-run on changes. The root `wrangler.jsonc` deploys `app/worker.js` and serves `app/dist/` as Cloudflare Static Assets. This means Cloudflare can use the repository root as its build directory without accidentally serving the old static prototype.
 
 ## Cloudflare deployment
 - Build command: `npm run build`
