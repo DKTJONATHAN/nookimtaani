@@ -92,7 +92,7 @@ The link opens `/verify-email?token=...`; connect the verification page in the f
 - `GET /api/admin/disputes`, `PATCH /api/admin/disputes`
 - `GET /api/admin/payments`, `PATCH /api/admin/payments` — manual Daraja reconciliation.
 
-The admin API requires both a valid Cloudflare Access JWT and an email in `ADMIN_EMAILS`. Protect the admin path with Access as well as using the API checks.
+The admin API requires both a valid Cloudflare Access JWT and an email in `ADMIN_EMAILS`. Create Access policies covering both `/admin*` (the admin interface) and `/api/admin/*` (the protected API). Keep the allowlist restricted to the named operations administrators.
 
 ## 7. Payment safety
 
