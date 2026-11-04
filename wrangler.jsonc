@@ -2,7 +2,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "nooki-mtaani",
   "main": "app/worker.js",
-  "compatibility_date": "2026-11-05",
+  "compatibility_date": "2026-11-03",
   "assets": {
     "directory": "./app/dist",
     "binding": "ASSETS",
