@@ -44,11 +44,11 @@ export function ListingDetailPage(){
 }
 
 export function AdminPage(){
- const [data,setData]=useState(null),[message,setMessage]=useState('Checking administrator access…'),[tab,setTab]=useState('overview'),[query,setQuery]=useState(''),[statusFilter,setStatusFilter]=useState('all'),[selected,setSelected]=useState(null),[busy,setBusy]=useState(false);
+ const [data,setData]=useState(null),[message,setMessage]=useState('Checking administrator access…'),[csrf,setCsrf]=useState(''),[tab,setTab]=useState('overview'),[query,setQuery]=useState(''),[statusFilter,setStatusFilter]=useState('all'),[selected,setSelected]=useState(null),[busy,setBusy]=useState(false);
  async function load(){
   setBusy(true);
   try{
-   const [e,s,d,p]=await Promise.all([api('/api/admin/enquiries'),api('/api/admin/spaces'),api('/api/admin/disputes'),api('/api/admin/payments')]);
+   const me=await api('/api/auth/me');setCsrf(me.csrfToken);\n   const [e,s,d,p]=await Promise.all([api('/api/admin/enquiries'),api('/api/admin/spaces'),api('/api/admin/disputes'),api('/api/admin/payments')]);
    setData({enquiries:e,spaces:s,disputes:d,payments:p});
    setMessage('');
   }catch(e){setMessage(e.message);setData(null)}
@@ -57,7 +57,7 @@ export function AdminPage(){
  useEffect(()=>{load()},[]);
  async function act(path,body,method='POST'){
   setMessage('');
-  try{await api(path,{method,headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});setSelected(null);await load()}
+  try{await api(path,{method,headers:headers(csrf),body:JSON.stringify(body)});setSelected(null);await load()}
   catch(e){setMessage(e.message)}
  }
  const contacts=data?.enquiries.contactMessages||[],hostEnquiries=data?.enquiries.hostEnquiries||[],applications=data?.enquiries.hostApplications||[],spaces=data?.spaces.items||[],payments=data?.payments.items||[],disputes=data?.disputes.items||[];
@@ -68,7 +68,7 @@ export function AdminPage(){
  const stat=(label,value,note)=><div className="admin-stat"><span>{label}</span><strong>{value}</strong><small>{note}</small></div>;
  const empty=(label)=><div className="admin-empty"><strong>Nothing here yet</strong><p>{label}</p></div>;
  const statusSelect=(x,type)=><label className="admin-status-control">Status<select value={x.status||'new'} onChange={e=>act('/api/admin/enquiries',{id:x.id,type,status:e.target.value},'PATCH')}><option value="new">New</option><option value="reviewing">Reviewing</option><option value="resolved">Resolved</option><option value="closed">Closed</option></select></label>;
- if(!data)return <section className="admin-page"><div className="admin-access"><span className="eyebrow">NOOKI OPERATIONS</span><h1>Admin<br/><em>workspace.</em></h1><p role="status">{message}</p><p className="admin-access-note">This workspace is restricted to administrators approved through Cloudflare Access. If you believe you should have access, check the Access policy and the ADMIN_EMAILS Worker variable.</p><button className="admin-primary" onClick={load} disabled={busy}>{busy?'Checking…':'Try again'}</button></div></section>;
+ if(!data)return <section className="admin-page"><div className="admin-access"><span className="eyebrow">NOOKI OPERATIONS</span><h1>Admin<br/><em>workspace.</em></h1><p role="status">{message}</p><p className="admin-access-note">This workspace requires a verified Nooki account. Sign in using the approved administrator email address, then return here. If access is denied, confirm that ADMIN_EMAILS contains that exact email.</p><button className="admin-primary" onClick={load} disabled={busy}>{busy?'Checking…':'Try again'}</button></div></section>;
  return <section className="admin-page">
   <header className="admin-heading"><div><span className="eyebrow">NOOKI OPERATIONS / PRIVATE</span><h1>Operations<br/><em>workspace.</em></h1><p>Review incoming messages, host applications, listings, payments and disputes.</p></div><div className="admin-heading-actions"><span className="admin-live"><i/> Protected session</span><button className="admin-secondary" onClick={load} disabled={busy}>{busy?'Refreshing…':'Refresh data'}</button></div></header>
   <nav className="admin-tabs" aria-label="Admin sections">{nav.map(([id,label])=><button key={id} className={tab===id?'is-active':''} onClick={()=>{setTab(id);setQuery('');setStatusFilter('all');setSelected(null)}}>{label}{id==='inbox'&&countNew>0?<b>{countNew}</b>:null}</button>)}</nav>
