@@ -29,5 +29,8 @@ The root `package.json` forwards build commands into `app/`. GitHub Actions veri
 
 Follow `../CLOUDFLARE-WORKERS-R2-PROMPT.md` for the D1 and private R2 backend plan. Keep R2 private and use Worker-mediated access checks.
 
-## Current limitations
-This is a designed React frontend, not yet a live booking marketplace. Authentication, D1 persistence, R2 uploads, host verification, availability, booking lifecycle, Daraja payment callbacks, moderation and dispute handling are not live. The preview host form does not send or store personal information.
+## Implemented platform workflows
+The React app and Worker contain account registration and email verification, sign-in, published space discovery, booking requests, host applications and listing submissions, private R2 evidence uploads, host booking decisions, Daraja STK initiation and callback recording, an Access-protected operations workspace, manual payment reconciliation, disputes, account export and account closure.
+
+## Launch checks still required
+These code paths must be tested against the actual Cloudflare D1/R2 bindings, Turnstile, Resend and Daraja sandbox credentials. Payment callbacks are not proof of settlement: an administrator must reconcile the receipt and amount against Safaricom before confirming a booking. Availability calendar management, automated refunds/payouts, wallet/escrow and independent identity/property verification are not implemented. Do not present these as available.
