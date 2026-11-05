@@ -48,7 +48,8 @@ export function AdminPage(){
  async function load(){
   setBusy(true);
   try{
-   const me=await api('/api/auth/me');setCsrf(me.csrfToken);\n   const [e,s,d,p]=await Promise.all([api('/api/admin/enquiries'),api('/api/admin/spaces'),api('/api/admin/disputes'),api('/api/admin/payments')]);
+   const me=await api('/api/auth/me');setCsrf(me.csrfToken);;
+   const [e,s,d,p]=await Promise.all([api('/api/admin/enquiries'),api('/api/admin/spaces'),api('/api/admin/disputes'),api('/api/admin/payments')]);
    setData({enquiries:e,spaces:s,disputes:d,payments:p});
    setMessage('');
   }catch(e){setMessage(e.message);setData(null)}
