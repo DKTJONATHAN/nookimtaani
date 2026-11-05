@@ -1,6 +1,6 @@
 const json=(data,status=200,extra={})=>{const headers=new Headers({"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"});for(const [key,value] of Object.entries(extra)){if(key.toLowerCase()==="set-cookie"&&Array.isArray(value))value.forEach(cookie=>headers.append("Set-Cookie",cookie));else headers.set(key,value)}return new Response(JSON.stringify(data),{status,headers})};
 const text=(v,max=500)=>String(v??"").trim().slice(0,max);
-const emailOK=v=>/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(v);
+const emailOK=v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 const phoneOK=v=>/^\\+?[0-9 ()-]{7,20}$/.test(v);
 const now=()=>new Date().toISOString();
 const id=()=>crypto.randomUUID();
