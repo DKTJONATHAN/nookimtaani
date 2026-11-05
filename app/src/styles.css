@@ -31,3 +31,7 @@
 .platform-page .policy-sections{min-width:0}
 .turnstile-widget{min-height:65px;overflow:hidden}
 @media(max-width:800px){.platform-row{align-items:flex-start;flex-wrap:wrap}.platform-row>div{flex:1 1 100%}}
+
+/* M-Pesa checkout and reconciliation */
+.booking-payment-row{align-items:flex-start;gap:22px}.booking-payment-actions{display:grid;gap:10px;min-width:min(100%,260px)}.booking-payment-actions form{display:grid;gap:8px}.booking-payment-actions label{display:grid;gap:6px;font:700 9px var(--mono);color:#627086}.booking-payment-actions input{width:100%;border:1px solid #d8dfe8;background:#fff;padding:11px;font:12px 'DM Sans',sans-serif;color:var(--ink)}.booking-payment-actions button{justify-content:center;border:0;background:var(--blue);color:#fff;padding:11px 13px;font:700 10px var(--mono);cursor:pointer}.booking-payment-actions button:hover{background:var(--blue-dark)}.booking-payment-actions .payment-hint{font-size:10px;line-height:1.65;color:#526176;margin:0}.payment-state{font-size:10px!important;color:#1749d1!important;font-weight:700}.payment-receipt{font:10px var(--mono)!important;color:#34445b!important;overflow-wrap:anywhere}.booking-payment-row .booking-payment-actions>button{border:1px solid var(--line);background:#fff;color:#8b3434}.policy-sections article>small{font-size:10px;color:var(--muted)}
+@media(max-width:800px){.booking-payment-actions{width:100%;min-width:0}.booking-payment-row{gap:12px}}
