@@ -8,5 +8,12 @@
     "binding": "ASSETS",
     "run_worker_first": true
   },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "nookimtaani-db",
+      "database_id": "6dfc85c7-8684-472e-b714-391e929c4ad0"
+    }
+  ],
   "triggers": { "crons": ["0 3 * * *"] }
 }
